@@ -1,0 +1,18 @@
+version: '3'
+services:
+  dc-env-crontab-dev:
+    image: cpluk3/dc-env-crontab-demo
+    restart: unless-stopped
+    container_name: dc-env-crontab-dev
+    env_file:
+    - dev.env
+    network_mode: bridge
+
+  dc-env-crontab-prod:
+    image: cpluk3/dc-env-crontab-demo
+    restart: unless-stopped
+    container_name: dc-env-crontab-prod
+    env_file:
+    - prod.env
+    network_mode: bridge
+

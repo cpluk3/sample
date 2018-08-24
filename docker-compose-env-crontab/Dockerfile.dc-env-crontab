@@ -1,0 +1,22 @@
+FROM ubuntu:17.10
+ENV LANG=en_US.UTF-8
+ENV TZ=Asia/Hong_Kong
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+#Install cron package
+RUN apt-get install -y cron
+
+#Define working directory
+RUN mkdir -p /home/src/
+
+#Add crontab file and set permission
+ADD src/crontab /etc/cron.d/crontab
+RUN chmod 0644 /etc/cron.d/crontab
+
+#Add entrypoint file and change its permission
+ADD src/entrypoint.sh /home/src/
+RUN chmod 0755 /home/src/entrypoint.sh
+
+CMD ["/home/src/entrypoint.sh"]
+
