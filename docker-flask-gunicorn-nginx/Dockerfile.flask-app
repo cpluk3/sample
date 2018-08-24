@@ -1,0 +1,10 @@
+FROM python:3.6.2
+
+RUN mkdir -p /home/src/bin/
+WORKDIR /home/src/bin/
+COPY flask/requirements.txt /home/src/bin/
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY flask/app.py /home/src/bin/
+COPY flask/run.py /home/src/bin/
+
