@@ -1,0 +1,10 @@
+version: '3'
+services:
+  test-ground:
+    image: cpluk3/test-ground
+    restart: unless-stopped
+    container_name: test-ground-dev
+    env_file:
+    - dev.env
+    network_mode: bridge
+

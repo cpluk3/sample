@@ -1,0 +1,37 @@
+FROM ubuntu:17.10
+ENV LANG=en_US.UTF-8
+ENV TZ=Asia/Hong_Kong
+
+RUN apt-get update -y
+RUN apt-get upgrade -y
+#Install cron package
+RUN apt-get install -y \
+    vim \
+    build-essential \
+    make \
+    pkg-config \
+    cron \
+    curl
+
+
+RUN curl -LO https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+RUN bash Miniconda3-latest-Linux-x86_64.sh -b -p /miniconda
+RUN rm Miniconda3-latest-Linux-x86_64.sh
+ENV PATH=/miniconda/bin:${PATH}
+RUN conda update -y conda
+
+
+#Define working directory
+RUN mkdir -p /home/src/
+
+#Add crontab file and set permission
+ADD src/crontab /etc/cron.d/crontab
+COPY src/hkibg-qcloud-cos-keeper /home/src/hkibg-qcloud-cos-keeper
+RUN chmod 0644 /etc/cron.d/crontab
+
+#Add entrypoint file and change its permission
+ADD src/entrypoint.sh /home/src/
+RUN chmod 0755 /home/src/entrypoint.sh
+
+CMD ["/home/src/entrypoint.sh"]
+

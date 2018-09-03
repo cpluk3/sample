@@ -1,0 +1,6 @@
+#timezone setting
+TZ=Asia/Hong_Kong
+
+#main crontab
+*/1 * * * * root echo "Hello $NAME" > /tmp/crontab 2>&1
+
